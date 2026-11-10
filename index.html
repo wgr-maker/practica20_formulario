@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Práctica 20 | Formulario</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #eee0cb;
+      color: #173e3b;
+      font: 1rem/1.5 system-ui, sans-serif;
+    }
+    main {
+      width: min(100%, 460px);
+      padding: clamp(20px, 6vw, 40px);
+      border-radius: 20px;
+      background: #fff8eb;
+      box-shadow: 0 12px 35px #173e3b20;
+      border-top: 8px solid #174b46;
+    }
+    h1 { margin: 0; line-height: 1.15; }
+    .practice { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    label { display: block; margin-top: 14px; font-weight: 600; }
+    input, button {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #54726a;
+      border-radius: 8px;
+      font: inherit;
+    }
+    input { margin-top: 4px; background: #fffdf8; color: inherit; }
+    button { margin-top: 22px; background: #174b46; color: white; cursor: pointer; font-weight: 700; }
+    button:hover { background: #103833; }
+    :focus-visible { outline: 3px solid #174b46; outline-offset: 3px; }
+    output { display: block; overflow-wrap: anywhere; }
+    output:not(:empty) { margin-top: 18px; padding: 12px; background: #e0ede6; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="practice">Práctica 20</p>
+    <h1>Formulario de datos</h1>
+    <p>Completa los campos con datos de ejemplo.</p>
+    <form id="formulario">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" name="nombre" type="text" required>
+      <label for="apellidos">Apellidos</label>
+      <input id="apellidos" name="apellidos" type="text" required>
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" name="correo" type="email" required>
+      <label for="pass">Contraseña</label>
+      <input id="pass" type="password" autocomplete="new-password" required>
+      <button type="submit">Procesar datos</button>
+    </form>
+    <output id="resultado" for="nombre apellidos correo" aria-live="polite"></output>
+  </main>
+  <script>
+    const formulario = document.querySelector('#formulario');
+    const resultado = document.querySelector('#resultado');
+
+    formulario.addEventListener('submit', (evento) => {
+      evento.preventDefault();
+      const datos = new FormData(formulario);
+      resultado.textContent = 'Datos procesados: ' + datos.get('nombre') + ' ' +
+        datos.get('apellidos') + ' (' + datos.get('correo') + ').';
+      document.querySelector('#pass').value = '';
+    });
+  </script>
+</body>
+</html>
